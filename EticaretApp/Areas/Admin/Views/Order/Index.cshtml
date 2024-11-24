@@ -1,0 +1,22 @@
+﻿@model OrderRoot
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+
+    @foreach(var item in Model.orders)
+    {
+        <h1>@item.orderCode</h1>
+    }
+
+
+</head>
+<body>
+</body>
+</html>

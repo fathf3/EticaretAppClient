@@ -1,0 +1,28 @@
+﻿
+@{
+    ViewData["Title"] = "Yetkisiz giris islemi";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section id="banner" class="py-3" style="background: #F9F3EC;">
+    <div class="container py-5 my-3">
+        <div class="hero-content py-5 my-3">
+            <h2 class="display-1 mt-3 mb-0">Error <span class="text-primary"> 401 </span></h2>
+            <h3>Üzgünüm yetkiniz olmayan bir sayfaya girmek istediniz!</h3>
+            <h5>Eğer bu hatayı otum açıkken aldıysanız oturum süreniz dolmuştur!</h5>
+            <h6>Lütfen yeniden giriş yapınız.</h6>
+            <a href="/Home/Index" class="btn btn-outline-dark btn-lg text-uppercase fs-6 px-4 py-3 rounded-1 mt-4">
+                Ana Sayfaya Dön
+                <svg width="24" height="24" viewBox="0 0 24 24" class="mb-1">
+                    <use xlink:href="#arrow-right"></use>
+                </svg>
+            </a>
+            <a href="/Admin/Auth/Login" class="btn btn-outline-dark btn-lg text-uppercase fs-6 px-4 py-3 rounded-1 mt-4">
+               Giriş Sayfasına Git
+                <svg width="24" height="24" viewBox="0 0 24 24" class="mb-1">
+                    <use xlink:href="#arrow-right"></use>
+                </svg>
+            </a>
+        </div>
+    </div>
+</section>

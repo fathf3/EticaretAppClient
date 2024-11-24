@@ -1,0 +1,95 @@
+﻿@model List<ActionRoot>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    int count = 0;
+}
+
+
+<div class="col-md-12">
+	<div class="card">
+		<div class="card-header">
+			<h4 class="card-title">Endpointler için Rollere Yetki Atama</h4>
+		</div>
+        <div class="accordion" id="accordionExample">
+            @foreach(var item in Model)
+            {
+
+                count++;
+                <div class="accordion-item">
+                <h2 class="accordion-header" id="heading @count">
+                        <button class="btn btn-black accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-@count" aria-expanded="true" aria-controls="collapse-@count">
+                        @item.name
+                    </button>
+                </h2>
+                    <div id="collapse-@count" class="accordion-collapse collapse show" aria-labelledby="heading @count" data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                            @foreach(var action in item.actions)
+                            {
+                                <div class="d-flex align-items-center">
+                                    <button type="button" class="btn btn-black btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal" data-mydata="@item.name" data-title="@action.code">
+                                        Rol Ata
+                                    </button> <h4 style="margin-top:7px;"> &nbsp @action.definition</h4>
+                                   
+                                </div>
+                            }
+                        </div>
+                </div>
+            </div>
+            }
+           
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Yetkilendirme</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form id="checkboxForm" method="post" action="/Admin/AuthorizeMenu/Select">
+                                <div>
+                                    <input type="hidden" id="modalDataTitle" name="code" value="" />
+                                    <input type="hidden" id="modalData" name="menu" value="" />
+                                    @for(int i=1; i<4;i++){
+                                    <div class="form-check form-switch">
+                                        <input name="selectedValues" value="Role @i" class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
+                                        <label class="form-check-label" for="flexSwitchCheckDefault">Role @i</label>
+                                    </div>
+                                    }
+                                  
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="submit" class="btn btn-black">Yetkilendir</button>
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kapat</button>
+                                </div>
+                            </form>
+
+                           
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+
+        </div>
+	</div>
+</div>
+
+<script>
+    // Modal açılmadan önceki event
+    var exampleModal = document.getElementById('exampleModal');
+    exampleModal.addEventListener('show.bs.modal', function (event) {
+        // Butona tıklama bilgisi
+        var button = event.relatedTarget;
+
+        // Butondan veri alma (data-mydata attribute'u)
+        var data = button.getAttribute('data-mydata');
+        var data2 = button.getAttribute('data-title');
+
+        // Modal içindeki alanı güncelleme
+        var modalDataElement = document.getElementById('modalData');
+        modalDataElement.value = data;
+        var modalDataTitleElement = document.getElementById('modalDataTitle');
+        modalDataTitleElement.value = data2;
+    });
+</script>
