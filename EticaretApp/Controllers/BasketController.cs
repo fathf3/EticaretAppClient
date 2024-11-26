@@ -1,13 +1,12 @@
-﻿using EticaretApp.Areas.Admin.Models;
-using EticaretApp.Dtos.Baskets;
+﻿using EticaretApp.Dtos.Baskets;
 using EticaretApp.Dtos.Products;
-using EticaretApp.Models;
+using EticaretApp.Services;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Security.Policy;
 using System.Text;
 
 namespace EticaretApp.Controllers
@@ -15,47 +14,31 @@ namespace EticaretApp.Controllers
     [Authorize]
     public class BasketController : Controller
     {
-         private readonly HttpClient _httpClient;
+        private readonly IHttpClientService _httpClientService;
 
-
-        public BasketController()
+        public BasketController(IHttpClientService httpClientService)
         {
-            _httpClient = new HttpClient();
-
+            _httpClientService = httpClientService;
         }
         public async Task<IActionResult> Index()
         {
-            var accessToken = HttpContext.Session.GetString("AccessToken");
-            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
-            var responseMessage = await _httpClient.GetAsync("https://localhost:7091/api/baskets");
-            if (responseMessage.IsSuccessStatusCode)
-            {
-                var jsonData = await responseMessage.Content.ReadAsStringAsync();
-                var values = JsonConvert.DeserializeObject<List<GetBasket>>(jsonData);
+            var accessToken = HttpContext.Session.GetString("AccessToken").ToString();
+            _httpClientService.AddDefaultRequestHeaders(accessToken);
+            var baskets = await _httpClientService.GetAsync<List<GetBasket>>("Baskets");
 
-                return View(values);
-            }
-
-            return Unauthorized();
-           
+            return View(baskets);
 
         }
-        public async Task<IActionResult> AddItemToBasket(string productId, int quantity=1)
+        public async Task<JsonResult> AddItemToBasket(string productId, int quantity = 1)
         {
-            Basket basket = new Basket();
+            AddItemToBasket basket = new AddItemToBasket();
             basket.ProductId = productId;
             basket.Quantity = quantity;
-            var jsonData = JsonConvert.SerializeObject(basket);
-           //var jsonData = JsonConvert.SerializeObject(new { usernameOrEmail = username, password = password });
-            StringContent stringContent = new StringContent(jsonData, Encoding.UTF8, "application/json");
             var accessToken = HttpContext.Session.GetString("AccessToken").ToString();
-            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
-            var responseMessage = await _httpClient.PostAsync("https://localhost:7091/api/baskets", stringContent);
-            if (responseMessage.IsSuccessStatusCode)
-            {
-                return RedirectToAction("Index", "Basket");
-            }
-            return RedirectToAction("/Auth/Login");
+            _httpClientService.AddDefaultRequestHeaders(accessToken);
+            var response = await _httpClientService.PostAsync<AddItemToBasket>("Baskets", basket);
+            return Json(new { success = true, message = "Ürün sepete eklendi." });
+
         }
     }
 }

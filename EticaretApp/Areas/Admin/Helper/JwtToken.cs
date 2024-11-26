@@ -1,4 +1,4 @@
-﻿using EticaretApp.Models;
+﻿using EticaretApp.Dtos.Tokens;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Net.Http;
@@ -25,10 +25,10 @@ namespace EticaretApp.Areas.Admin.Helper
             {
                 var response = await responseMessage.Content.ReadAsStringAsync();
                 var values = JsonConvert.DeserializeObject<TokenRoot>(response);
-                JwtAuthorizationHandler.AccessToken = values.token.accessToken;
-                JwtAuthorizationHandler.RefreshToken = values.token.refreshToken;
-                JwtAuthorizationHandler.Expire = values.token.expiration.AddHours(3);
-                return values.token.accessToken;
+                JwtAuthorizationHandler.AccessToken = values.Token.AccessToken;
+                JwtAuthorizationHandler.RefreshToken = values.Token.RefreshToken;
+                JwtAuthorizationHandler.Expire = values.Token.Expiration.AddHours(3);
+                return values.Token.AccessToken;
 
             }
 

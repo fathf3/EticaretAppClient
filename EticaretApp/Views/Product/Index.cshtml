@@ -79,10 +79,9 @@
                                             @if (User.Claims.Any())
                                             {
 
-                                                <form asp-action="AddItemToBasket" asp-controller="Basket" method="post">
-                                                    <input type="hidden" name="productId" value="@product.Id" />
-                                                    <button class="btn btn-primary me-3 px-4 pt-3 pb-3" type="submit">Sepete Ekle</button>
-                                                </form>
+                                               
+                                                    <button class="btn btn-primary me-3 px-4 pt-3 pb-3 add-to-cart" data-id="@product.Id" type="submit">Sepete Ekle</button>
+                                             
                                             }
                                             else
                                             {
@@ -215,3 +214,27 @@
     </div>
 </div>
 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+<script>
+    $(document).on('click', '.add-to-cart', function () {
+        var productId = $(this).data('id'); // Ürün ID'sini al
+
+        $.ajax({
+            url: '/Basket/AddItemToBasket', // Sepete ekleme metodunun URL'si
+            type: 'POST',
+            data: { productId: productId },
+            success: function (response) {
+                if (response.success) {
+                    swal(response.message); // Başarı mesajı göster
+                } else {
+                    alert("Bir hata oluştu.");
+                }
+            },
+            error: function () {
+                alert("Bir hata oluştu.");
+            }
+        });
+    });
+</script>

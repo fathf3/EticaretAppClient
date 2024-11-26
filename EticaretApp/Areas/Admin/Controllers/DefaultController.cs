@@ -1,7 +1,4 @@
-﻿using EticaretApp.Areas.Admin.Models;
-using EticaretApp.Dtos.Products;
-using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
+﻿using Microsoft.AspNetCore.Mvc;
 
 namespace EticaretApp.Areas.Admin.Controllers
 {

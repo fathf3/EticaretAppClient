@@ -1,4 +1,4 @@
-﻿@model EticaretApp.Dtos.Products.GetAllProduct
+﻿@model GetAllProduct
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
@@ -11,7 +11,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
-                    <a href="/Admin/Product/AddProduct" class="btn btn-secondary">
+                    <a href="/Admin/Products/AddProduct" class="btn btn-secondary">
                         <span class="btn-label">
                             <i class="fa fa-plus"></i>
                         </span>
@@ -48,7 +48,7 @@
                                                         <td class="sorting_1">@product.Name</td>
                                                         <td>@product.Price</td>
                                                         <td>@product.Stock</td>
-                                                        <td>@product.Images.FirstOrDefault(x => x.Showcase)</td>
+                                                        <td> <img class="img-fluid" src="@product.Images.FirstOrDefault()?.Path" /> </td>
                                                         <td>
                                                             <a href="/Home/Index" class="btn btn-icon btn-round btn-warning">
                                                                 <i class="icon-settings"></i>
@@ -71,38 +71,7 @@
                     </div>
                 </div>
             </div>
-            <form>
-                <div class="form-group">
-                    <label for="exampleInputEmail1">Ürün Adı</label>
-                    <input type="text" class="form-control" placeholder="Ürün Adı">
 
-                </div>
-                <div class="form-group">
-                    <label for="exampleInputEmail1">Email address</label>
-                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
-                    <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
-                </div>
-                <div class="form-group">
-                    <label for="exampleInputPassword1">Password</label>
-                    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
-                </div>
-                <div class="form-group form-check">
-                    <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                    <label class="form-check-label" for="exampleCheck1">Check me out</label>
-                </div>
-                <div class="input-group mb-3">
-
-                    <div class="custom-file">
-                        <input type="file" class="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">
-
-                    </div>
-                </div>
-                <button type="submit" class="btn btn-primary">Submit</button>
-            </form>
-
-        </div>
-    </div>
-</div>
 
 
 

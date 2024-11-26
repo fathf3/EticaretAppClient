@@ -27,7 +27,7 @@
                         <!-- product-large-slider -->
                         <div class="swiper product-large-slider swiper-fade swiper-initialized swiper-horizontal swiper-watch-progress swiper-backface-hidden">
                             <div class="swiper-wrapper" id="swiper-wrapper-ec9df3e8104315fab" aria-live="polite">
-                                @foreach (var image in Model.Product.Image)
+                                @foreach (var image in Model.Product.Images)
                                 {
                                     <div class="swiper-slide" role="group" aria-label="4 / 4" style="width: 624px; opacity: 0; transform: translate3d(-1872px, 0px, 0px);">
                                         <img src="@image.Path" class="img-fluid">
@@ -44,7 +44,7 @@
                         <!-- product-thumbnail-slider -->
                         <div thumbsslider="" class="swiper product-thumbnail-slider swiper-initialized swiper-horizontal swiper-free-mode swiper-watch-progress swiper-backface-hidden swiper-thumbs">
                             <div class="swiper-wrapper" id="swiper-wrapper-746fb6d8c2b326de" aria-live="polite" style="transform: translate3d(0px, 0px, 0px);">
-                                @foreach (var image in Model.Product.Image)
+                                @foreach (var image in Model.Product.Images)
                                 {
                                 <div class="swiper-slide swiper-slide-visible swiper-slide-active swiper-slide-thumb-active" role="group" aria-label="1 / 4" style="width: 202.667px; margin-right: 8px;">
                                         <img src="@image.Path" class="img-fluid">

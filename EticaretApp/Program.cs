@@ -1,4 +1,4 @@
-using EticaretApp.Areas.Admin.Helper;
+using EticaretApp.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using System.Data;
 using System.IdentityModel.Tokens.Jwt;
@@ -7,6 +7,7 @@ using System.Security.Claims;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+
 builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>
@@ -14,7 +15,8 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
         options.LoginPath = "/Auth/Login"; // Kullanıcı giriş yapmamışsa bu yola yönlendirilecek
         options.AccessDeniedPath = "/Error/Unauthorized401"; // Yetki yoksa bu yola yönlendirilecek
     });
-builder.Services.AddHttpClient();
+//builder.Services.AddHttpClient<IHttpClientService, HttpClientService>();
+builder.Services.AddHttpClient<IHttpClientService, HttpClientService>();
 builder.Services.AddDistributedMemoryCache(); // Required for session
 builder.Services.AddSession(options =>
 {

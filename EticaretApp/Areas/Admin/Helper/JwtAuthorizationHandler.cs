@@ -1,4 +1,4 @@
-﻿using EticaretApp.Models;
+﻿using EticaretApp.Dtos.Tokens;
 using Newtonsoft.Json;
 using NuGet.Common;
 using System.Net.Http.Headers;
@@ -49,7 +49,7 @@ namespace EticaretApp.Areas.Admin.Helper
                 {
                     var response2 = await response.Content.ReadAsStringAsync();
                     var values = JsonConvert.DeserializeObject<TokenRoot>(response2);
-                    return values.token.accessToken;
+                    return values.Token.AccessToken;
                 }
             }
 

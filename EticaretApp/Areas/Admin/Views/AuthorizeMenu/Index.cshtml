@@ -19,17 +19,17 @@
                 <div class="accordion-item">
                 <h2 class="accordion-header" id="heading @count">
                         <button class="btn btn-black accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-@count" aria-expanded="true" aria-controls="collapse-@count">
-                        @item.name
+                        @item.Name
                     </button>
                 </h2>
                     <div id="collapse-@count" class="accordion-collapse collapse show" aria-labelledby="heading @count" data-bs-parent="#accordionExample">
                     <div class="accordion-body">
-                            @foreach(var action in item.actions)
+                            @foreach(var action in item.Actions)
                             {
                                 <div class="d-flex align-items-center">
-                                    <button type="button" class="btn btn-black btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal" data-mydata="@item.name" data-title="@action.code">
+                                    <button type="button" class="btn btn-black btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal" data-mydata="@item.Name" data-title="@action.Code">
                                         Rol Ata
-                                    </button> <h4 style="margin-top:7px;"> &nbsp @action.definition</h4>
+                                    </button> <h4 style="margin-top:7px;"> &nbsp @action.Definition</h4>
                                    
                                 </div>
                             }

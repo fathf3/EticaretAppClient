@@ -4,8 +4,8 @@ using Newtonsoft.Json;
 using System.Net.Http.Headers;
 using System.Net.Http;
 using System.Text;
-using EticaretApp.Models;
 using EticaretApp.Areas.Admin.Helper;
+using EticaretApp.Dtos.Orders;
 
 namespace EticaretApp.Areas.Admin.Controllers
 {

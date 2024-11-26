@@ -1,10 +1,10 @@
-﻿namespace EticaretApp.Areas.Admin.Models
+﻿namespace EticaretApp.Dtos.Roles
 {
     public class EndpointToRole
     {
         public EndpointToRole(string[] roles, string endpointCode, string menu)
         {
-         
+
             Roles = roles;
             EndpointCode = endpointCode;
             Menu = menu;

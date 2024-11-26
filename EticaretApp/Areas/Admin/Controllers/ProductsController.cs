@@ -1,8 +1,11 @@
-﻿using EticaretApp.Dtos.Products;
+﻿using EticaretApp.Dtos.Baskets;
+using EticaretApp.Dtos.Products;
+using EticaretApp.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Net.Http.Headers;
+using System.Reflection;
 
 namespace EticaretApp.Areas.Admin.Controllers
 {
@@ -10,28 +13,18 @@ namespace EticaretApp.Areas.Admin.Controllers
     [Authorize(Roles = "Admin")]
     public class ProductsController : Controller
     {
-        private readonly HttpClient _httpClient;
+        private readonly IHttpClientService _httpClientService;
 
-
-        public ProductsController()
+        public ProductsController(IHttpClientService httpClientService)
         {
-            _httpClient = new HttpClient();
-
+            _httpClientService = httpClientService;
         }
         public async Task<IActionResult> Index()
         {
-            var accessToken = HttpContext.Session.GetString("AccessToken");
-            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
-            var responseMessage = await _httpClient.GetAsync("https://localhost:7091/api/products");
-            if (responseMessage.IsSuccessStatusCode)
-            {
-                var jsonData = await responseMessage.Content.ReadAsStringAsync();
-                var values = JsonConvert.DeserializeObject<GetAllProduct>(jsonData);
-               
-                return View(values);
-            }
-
-            return Unauthorized();
+            var accessToken = HttpContext.Session.GetString("AccessToken").ToString();
+            _httpClientService.AddDefaultRequestHeaders(accessToken);
+            var products = await _httpClientService.GetAsync<GetAllProduct>("Products");
+            return View(products);
         }
 
         [HttpGet]
@@ -40,9 +33,17 @@ namespace EticaretApp.Areas.Admin.Controllers
             return View();
         }
         [HttpPost]
-        public async Task<IActionResult> AddProduct(short a)
+        public async Task<IActionResult> AddProduct(CreateProduct createProduct)
         {
-            return View();
+
+            var accessToken = HttpContext.Session.GetString("AccessToken").ToString();
+            _httpClientService.AddDefaultRequestHeaders(accessToken);
+            var response = await _httpClientService.PostAsync<CreateProduct>("Products", createProduct);
+           
+            return RedirectToAction("Index");
+
+
+
         }
 
     }

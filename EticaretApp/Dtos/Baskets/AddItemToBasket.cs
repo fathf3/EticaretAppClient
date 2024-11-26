@@ -1,6 +1,6 @@
-﻿namespace EticaretApp.Models
+﻿namespace EticaretApp.Dtos.Baskets
 {
-    public class Basket
+    public class AddItemToBasket
     {
         public string ProductId { get; set; }
         public int Quantity { get; set; }
